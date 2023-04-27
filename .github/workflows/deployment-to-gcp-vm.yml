@@ -1,0 +1,43 @@
+name: Deployment to GCP VM
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore:
+      - 'README.md'
+      - '**/*.draft.md'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+
+    - name: create remote directory
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: craft
+        key: ${{ secrets.KEY }}
+        script: mkdir -p /home/craft/compose/bacc
+
+    - name: copy source via ssh key
+      uses: burnett01/rsync-deployments@4.1
+      with:
+        switches: -avzr --delete
+        remote_path: /home/craft/compose/bacc
+        remote_host: ${{ secrets.HOST }}
+        remote_user: craft
+        remote_key: ${{ secrets.KEY }}
+
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: craft
+        key: ${{ secrets.KEY }}
+        script: |
+          sh /home/craft/compose/bacc/deploy.sh

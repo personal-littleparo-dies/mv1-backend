@@ -36,6 +36,6 @@ if __name__ == "__main__":
     # Base.metadata.create_all(engine)
 
     # uvicorn run for production
-    uvicorn.run("main:app", host="0.0.0.0", port=8000)
-                # ssl_keyfile="/etc/ssl/private/privkey.pem",
-                # ssl_certfile="/etc/ssl/certs/fullchain.pem")
+    uvicorn.run("main:app", host="0.0.0.0", port=8000,
+                ssl_keyfile="/etc/ssl/private/privkey.pem",
+                ssl_certfile="/etc/ssl/certs/fullchain.pem")

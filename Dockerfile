@@ -12,7 +12,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
-EXPOSE 443
+EXPOSE 8000
 
 ENTRYPOINT ["python", "/back/main.py"]
 

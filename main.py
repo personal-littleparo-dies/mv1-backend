@@ -30,11 +30,6 @@ async def say_hello(name: str):
 if __name__ == "__main__":
     import uvicorn
 
-    # engine = create_engine(
-    #     get_settings().db_url,
-    # )
-    # Base.metadata.create_all(engine)
-
     # uvicorn run for production
     uvicorn.run("main:app", host="0.0.0.0", port=8000,
                 ssl_keyfile="/etc/ssl/private/privkey.pem",

@@ -4,15 +4,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_V1_STR = "/api/v1"
-PROJECT_NAME = "Music Lounge"
 
+# PROJECT_NAME = "Music Lounge"
+# PROJECT_VERSION = "0.1.0"
+# API_PREFIX = "/api/v1"
+# ...
 
 class Config:
+    DEBUG = False
+    TESTING = False
     DATABASE_URL = f"sqlite:///{Path(__file__).parent.parent.absolute()}/db.sqlite3"
 
 
 class ProdConfig(Config):
+    # SECRET_KEY = os.getenv("SECRET_KEY")
+    # DATABASE_URL = os.getenv("DATABASE_URL")
     SECRET_KEY = "TCVNJXCcFhK6UaiB"
     DATABASE_URL = f"postgresql+psycopg2://postgres:{SECRET_KEY}@https://nuuikzhrsocnmmngwyfx.supabase.co:5432/muzevird"
 

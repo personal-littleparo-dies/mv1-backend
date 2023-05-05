@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
@@ -34,21 +34,21 @@ def read_room(room_id: int, db: Session = Depends(get_db)):
     return room
 
 
-@router.put("/rooms/{room_id}", response_model=RoomOut)
-def update_room(room_id: int, room_data: RoomCreate, db: Session = Depends(get_db),
-                #current_user: User = Depends(get_current_user)
-                ):
-    room = db.query(Room).filter(Room.id == room_id).first()
-    if not room:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Room not found")
-    # if room.owner_id != current_user.id:
-    #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Only the room owner can update the room")
-
-    for field, value in room_data:
-        setattr(room, field, value)
-    db.commit()
-    db.refresh(room)
-    return room
+# @router.put("/rooms/{room_id}", response_model=RoomOut)
+# def update_room(room_id: int, room_data: RoomCreate, db: Session = Depends(get_db),
+#                 #current_user: User = Depends(get_current_user)
+#                 ):
+#     room = db.query(Room).filter(Room.id == room_id).first()
+#     if not room:
+#         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Room not found")
+#     # if room.owner_id != current_user.id:
+#     #     raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Only the room owner can update the room")
+#
+#     for field, value in room_data:
+#         setattr(room, field, value)
+#     db.commit()
+#     db.refresh(room)
+#     return room
 
 
 @router.delete("/rooms/{room_id}", status_code=status.HTTP_204_NO_CONTENT)

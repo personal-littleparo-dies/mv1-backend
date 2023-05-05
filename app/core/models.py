@@ -7,41 +7,44 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-
 from database import Base
 
 
 class Lobby(Base):
-    __tablename__ = "lobby"
+    __tablename__ = "lobbies"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(255), index=True, nullable=False)
-    owner = Column(String(255), index=True, nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    name = Column(String, unique=True, index=True)
+    password = Column(String)
 
+    # Define one-to-many relationship with Room model
     rooms = relationship("Room", back_populates="lobby")
 
 
 class Room(Base):
-    __tablename__ = "room"
+    __tablename__ = "rooms"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(255), index=True, nullable=False)
-    password = Column(String(255), nullable=False)
+    name = Column(String, unique=True, index=True)
+    password = Column(String)
 
-    # queue = relationship("MusicQueue", back_populates="room")
+    # Define one-to-many relationship with QueueItem model
+    queue_items = relationship("QueueItem", back_populates="room")
 
 
 class MusicQueue(Base):
-    __tablename__ = "song_queue"
+    __tablename__ = "queue_items"
 
     id = Column(Integer, primary_key=True, index=True)
-    song_name = Column(String(255), index=True, nullable=False)
-    song_url = Column(String(255), nullable=False)
-    added_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
-    room_id = Column(Integer, ForeignKey("room.id"), nullable=False)
+    room_id = Column(Integer, ForeignKey("rooms.id"))
+    user_id = Column(Integer)
+    song = Column(String)
+    artist = Column(String)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    room = relationship("Room", back_populates="queue")
+    # Define many-to-one relationship with Room model
+    room = relationship("Room", back_populates="queue_items")
+
 
 
 # class Track(Base):

@@ -1,10 +1,10 @@
 name: Deployment to GCP VM
 on:
-  pull_request:
+  push:
     branches: [ "main" ]
-#    paths-ignore:
-#      - 'README.md'
-#      - '**/*.draft.md'
+    paths-ignore:
+      - 'README.md'
+      - '**/*.draft.md'
   workflow_dispatch:
 
 jobs:

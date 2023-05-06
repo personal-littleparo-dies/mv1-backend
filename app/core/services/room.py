@@ -77,7 +77,6 @@ def get_tracks(db: Session, room: Room) -> List:
     Returns a list of all tracks in a room
     """
     tracks = db.query(TrackModel).filter(TrackModel.room_id == room.id).all()
-    print([TrackResponse.from_orm(track) for track in tracks])
     return [TrackResponse.from_orm(track) for track in tracks]
 
 

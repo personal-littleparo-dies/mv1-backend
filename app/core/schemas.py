@@ -1,50 +1,63 @@
+import uuid
 from typing import List, Optional
 from pydantic import BaseModel
 
 
-class MusicQueue(BaseModel):
-    id: str
+# Schema for a music track
+class TrackBase(BaseModel):
+    title: str
+    # artist: str
+
+    class Config:
+        orm_mode = True
+
+
+# Schema for a music track with an id
+class Track(TrackBase):
+    uri: str
+
+
+# Schema for creating a music track
+class TrackCreate(Track):
+    room_id: uuid.UUID
+
+
+class TrackResponse(Track):
+    id: int
+
+
+# Schema for a room
+class RoomBase(BaseModel):
     name: str
-    artist: str
+
+    class Config:
+        orm_mode = True
 
 
-class RoomCreate(BaseModel):
-    pass
-
-class RoomUpdate:
-    pass
-
-class RoomIn(BaseModel):
-    name: str
+# Schema for creating a room
+class RoomCreate(RoomBase):
     password: str
 
 
-class RoomOut(BaseModel):
-    id: str
-    name: str
-
-
-class Room(BaseModel):
-    id: str
-    name: str
+# Schema for updating a room
+class RoomUpdate(RoomBase):
     password: Optional[str] = None
-    music_queue: List[MusicQueue] = []
 
 
-class LobbyCreate(BaseModel):
-    name: str
+# Schema for a room with tracks
+class Room(RoomBase):
+    id: uuid.UUID
+    tracks: List[Track] = []
+
+
+class RoomWithPwd(Room):
     password: str
 
 
-class LobbyUpdate(BaseModel):
-    name: Optional[str] = None
-    password: Optional[str] = None
+# Schema for a list of rooms
+class Rooms(List[Room]):
+    pass
 
 
-class Lobby(BaseModel):
-    id: str
-    name: str
-    password: Optional[str] = None
-    rooms: List[Room] = []
-
-
+class TokenData(BaseModel):
+    username: Optional[str] = None

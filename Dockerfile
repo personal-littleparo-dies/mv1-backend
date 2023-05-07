@@ -7,7 +7,7 @@ WORKDIR /back
 #ENV PYTHONUNBUFFERED=1
 #ENV PYTHONPATH=/back
 
-ENV ENVIROMENT=production
+ENV ENVIRONMENT=production
 
 COPY requirements.txt .
 RUN pip install --upgrade pip

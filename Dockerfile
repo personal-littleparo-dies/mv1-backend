@@ -7,6 +7,8 @@ WORKDIR /back
 #ENV PYTHONUNBUFFERED=1
 #ENV PYTHONPATH=/back
 
+ENV ENVIROMENT=production
+
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt

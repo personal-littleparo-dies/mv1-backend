@@ -29,7 +29,7 @@ app.include_router(api_v1_router)
 create_db()
 
 origins = [
-    "https://jonngwanma.de",
+    "https://testserver.jonngwanma.de",
     "http://localhost:5173",
 ]
 

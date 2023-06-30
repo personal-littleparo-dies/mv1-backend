@@ -21,8 +21,8 @@ class Config:
 class ProdConfig(Config):
     # SECRET_KEY = os.getenv("SECRET_KEY")
     # DATABASE_URL = os.getenv("DATABASE_URL")
-    SECRET_DATABASE_KEY = "TCVNJXCcFhK6UaiB"
-    DATABASE_URL = f"postgresql+psycopg2://postgres:{SECRET_DATABASE_KEY}@db.nuuikzhrsocnmmngwyfx.supabase.co:5432/muzevird"
+    SECRET_DATABASE_KEY = "EUnndoEnhWm37ieu"
+    DATABASE_URL = f"postgresql+psycopg2://postgres:{SECRET_DATABASE_KEY}@db.oxvpyxqfidicuyvanjhd.supabase.co:5432/muzevird"
 
 
 class DevConfig(Config):
